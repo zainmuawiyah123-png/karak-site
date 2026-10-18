@@ -289,12 +289,6 @@
           <span class="text-lg font-black text-amber-400">${fmt(total)} د.أ</span>
         </div>
 
-        <div class="bg-[#231913] border border-emerald-700/50 rounded-2xl p-3 space-y-2">
-          <div class="text-emerald-300 font-black text-sm">💬 استفسار عن الطلب</div>
-          <p class="text-[10px] text-stone-300">أرسل استفسارك عن توفر الأصناف والتوصيل دون تأكيد الدفع.</p>
-          ${WHATSAPP_NUMBER ? `<a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('مرحبا، يعطيكم العافية 🌷\nحاب أستفسر عن طلبي من مطبخكم:\n\n' + ls.map(l => '🍽️ الطلب: ' + l.name + '\n⚖️ الكمية: ' + qtyFmt(l.qty) + ' ' + l.qtyLabel + '\n💰 السعر المعروض: ' + fmt(l.price) + ' د.أ / ' + l.priceUnit + ' (إجمالي الصنف: ' + fmt(l.lineTotal) + ' د.أ)').join('\n\n') + '\n\n💰 إجمالي السلة: ' + fmt(total) + ' د.أ\n\nممكن أعرف إذا متوفر، وتفاصيل التوصيل ومتى ممكن يوصلني؟\n\nشكرًا إلكم ❤️'))}" target="_blank" rel="noreferrer" class="block w-full text-center bg-emerald-700 hover:bg-emerald-600 text-white font-black text-xs py-2.5 rounded-xl">استفسر عن الطلب عبر واتساب</a>` : ''}
-        </div>
-
         <div class="bg-[#231913] border border-amber-700/40 rounded-2xl p-3 space-y-3">
           <div class="text-amber-300 font-black text-sm">🏦 الدفع بالتحويل عبر كليك (CliQ)</div>
           <div class="grid grid-cols-2 gap-2 text-[11px]">
