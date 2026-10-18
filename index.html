@@ -288,7 +288,25 @@
           <span class="text-sm font-bold text-stone-200">الإجمالي</span>
           <span class="text-lg font-black text-amber-400">${fmt(total)} د.أ</span>
         </div>
+        <button data-action="whatsapp" class="w-full bg-green-700 hover:bg-green-800 text-white font-black text-xs py-2.5 rounded-xl">💬 استفسار عن الطلب عبر واتساب</button>
 
+        <div class="bg-[#231913] border border-amber-700/40 rounded-2xl p-3 space-y-3">
+          <div class="text-amber-300 font-black text-sm">🏦 الدفع بالتحويل عبر كليك (CliQ)</div>
+          <div class="grid grid-cols-2 gap-2 text-[11px]">
+            <div class="bg-[#1a120e] rounded-lg p-2">
+              <div class="text-stone-400 mb-0.5">البنك</div>
+              <div class="font-black text-stone-100">${CLIQ_BANK}</div>
+            </div>
+            <div class="bg-[#1a120e] rounded-lg p-2">
+              <div class="text-stone-400 mb-0.5">الاسم المستعار (Alias)</div>
+              <div class="flex items-center justify-between gap-1">
+                <span dir="ltr" class="font-black text-amber-400 text-sm">${CLIQ_ALIAS}</span>
+                <button data-action="copy" data-key="alias" data-text="${CLIQ_ALIAS}" aria-label="نسخ" class="text-stone-300 hover:text-white">${copied === 'alias' ? CHECK : COPY}</button>
+              </div>
+            </div>
+          </div>
+          <div class="bg-[#1a120e] rounded-lg p-2 flex items-center justify-between text-[11px]">
+   
         <div class="bg-[#231913] border border-amber-700/40 rounded-2xl p-3 space-y-3">
           <div class="text-amber-300 font-black text-sm">🏦 الدفع بالتحويل عبر كليك (CliQ)</div>
           <div class="grid grid-cols-2 gap-2 text-[11px]">
