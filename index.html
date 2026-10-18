@@ -319,6 +319,37 @@
           ${WHATSAPP_NUMBER ? `<a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('مرحباً، حوّلت عبر كليك إلى ' + CLIQ_ALIAS + ' (' + CLIQ_BANK + ') مبلغ ' + fmt(total) + ' د.أ لطلب: ' + ls.map(l => l.name + ' ' + qtyFmt(l.qty) + ' ' + l.qtyLabel).join('، '))}" target="_blank" rel="noreferrer" class="block w-full text-center bg-green-600 hover:bg-green-700 text-white font-black text-xs py-2 rounded-xl">تم التحويل — أرسل الطلب عبر واتساب</a>` : ''}
         </div>`;
       }
+// دالة إرسال الطلب إلى الواتساب بالتنسيق الجديد
+function sendOrderToWhatsApp() {
+    // رقم الواتساب الخاص بك
+    const storePhoneNumber = "962795177640"; 
+
+    // التأكد من وجود عناصر في السلة (باستخدام مصفوفة السلة لديك cart)
+    if (!cart || cart.length === 0) {
+        alert("سلة المشتريات فارغة!");
+        return;
+    }
+
+    // تجميع الأصناف والكميات
+    let itemsText = cart.map(item => `• ${item.name}`).join('\n');
+    let quantitiesText = cart.map(item => `• ${item.quantity} ${item.unit || ''}`).join('\n');
+    
+    // حساب المجموع الإجمالي
+    let totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2);
+
+    // نص الرسالة المطلوب بالضبط
+    let message = `مرحبا، يعطيكم العافية 🌷\n` +
+                  `حاب أستفسر عن طلبي من مطبخكم:\n\n` +
+                  `🍽️ الطلب:\n${itemsText}\n\n` +
+                  `⚖️ الكمية:\n${quantitiesText}\n\n` +
+                  `💰 السعر المعروض: ${totalPrice} د.أ\n\n` +
+                  `ممكن أعرف إذا متوفر، وتفاصيل التوصيل ومتى ممكن يوصلني؟\n\n` +
+                  `شكرًا إلكم ❤️`;
+
+    // ترميز النص وفتح تطبيق الواتساب
+    let encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/${storePhoneNumber}?text=${encodedMessage}`, '_blank');
+}
       $('cart-sheet').innerHTML = html;
     }
 
