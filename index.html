@@ -289,34 +289,10 @@
           <span class="text-lg font-black text-amber-400">${fmt(total)} د.أ</span>
         </div>
 
-        <div class="bg-[#231913] border border-amber-700/40 rounded-2xl p-3 space-y-3">
-          <div class="text-amber-300 font-black text-sm">🏦 الدفع بالتحويل عبر كليك (CliQ)</div>
-          <div class="grid grid-cols-2 gap-2 text-[11px]">
-            <div class="bg-[#1a120e] rounded-lg p-2">
-              <div class="text-stone-400 mb-0.5">البنك</div>
-              <div class="font-black text-stone-100">${CLIQ_BANK}</div>
-            </div>
-            <div class="bg-[#1a120e] rounded-lg p-2">
-              <div class="text-stone-400 mb-0.5">الاسم المستعار (Alias)</div>
-              <div class="flex items-center justify-between gap-1">
-                <span dir="ltr" class="font-black text-amber-400 text-sm">${CLIQ_ALIAS}</span>
-                <button data-action="copy" data-key="alias" data-text="${CLIQ_ALIAS}" aria-label="نسخ" class="text-stone-300 hover:text-white">${copied === 'alias' ? CHECK : COPY}</button>
-              </div>
-            </div>
-          </div>
-          <div class="bg-[#1a120e] rounded-lg p-2 flex items-center justify-between text-[11px]">
-            <div>
-              <div class="text-stone-400 mb-0.5">المبلغ المطلوب تحويله</div>
-              <div class="font-black text-amber-400 text-sm">${fmt(total)} د.أ</div>
-            </div>
-            <button data-action="copy" data-key="amount" data-text="${fmt(total)}" aria-label="نسخ المبلغ" class="text-stone-300 hover:text-white">${copied === 'amount' ? CHECK : COPY}</button>
-          </div>
-          <ol class="text-[10px] text-stone-300 leading-relaxed list-decimal pr-4 space-y-0.5">
-            <li>افتح تطبيق بنكك أو محفظتك واختر «كليك».</li>
-            <li>اختر التحويل إلى «اسم مستعار» وأدخل <b dir="ltr">${CLIQ_ALIAS}</b> (${CLIQ_BANK}).</li>
-            <li>حوّل المبلغ <b>${fmt(total)} د.أ</b> ثم احتفظ بإشعار التحويل.</li>
-          </ol>
-          ${WHATSAPP_NUMBER ? `<a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('مرحباً، حوّلت عبر كليك إلى ' + CLIQ_ALIAS + ' (' + CLIQ_BANK + ') مبلغ ' + fmt(total) + ' د.أ لطلب: ' + ls.map(l => l.name + ' ' + qtyFmt(l.qty) + ' ' + l.qtyLabel).join('، '))}" target="_blank" rel="noreferrer" class="block w-full text-center bg-green-600 hover:bg-green-700 text-white font-black text-xs py-2 rounded-xl">تم التحويل — أرسل الطلب عبر واتساب</a>` : ''}
+        <div class="bg-[#231913] border border-green-700/40 rounded-2xl p-3 space-y-3">
+          <div class="text-green-300 font-black text-sm">💬 الاستفسار عن الطلب عبر واتساب</div>
+          <p class="text-[11px] text-stone-300 leading-relaxed">اضغط على الزر لفتح واتساب برسالة جاهزة تتضمن المنتجات والكميات والأسعار المعروضة في سلتك.</p>
+          ${WHATSAPP_NUMBER ? `<a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('مرحبا، يعطيكم العافية 🌷\nحاب أستفسر عن طلبي من مطبخكم:\n\n🍽️ الطلب:\n' + ls.map(l => '- ' + l.name).join('\n') + '\n\n⚖️ الكمية:\n' + ls.map(l => '- ' + l.name + ': ' + qtyFmt(l.qty) + ' ' + l.qtyLabel).join('\n') + '\n\n💰 السعر المعروض:\n' + ls.map(l => '- ' + l.name + ': ' + fmt(l.price) + ' د.أ / ' + l.priceUnit + ' (المجموع: ' + fmt(l.lineTotal) + ' د.أ)').join('\n') + '\n\nإجمالي السلة المعروض: ' + fmt(total) + ' د.أ\n\nممكن أعرف إذا متوفر، وتفاصيل التوصيل ومتى ممكن يوصلني؟\n\nشكرًا إلكم ❤️'))}" target="_blank" rel="noreferrer" class="block w-full text-center bg-green-600 hover:bg-green-700 text-white font-black text-xs py-3 rounded-xl">إرسال الاستفسار عبر واتساب</a>` : '<p class="text-xs text-red-300">رقم واتساب غير مضبوط حالياً.</p>'}
         </div>`;
       }
       $('cart-sheet').innerHTML = html;
