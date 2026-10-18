@@ -117,7 +117,48 @@
     <div id="cart-sheet" class="w-full max-w-[430px] max-h-[92vh] overflow-y-auto bg-[#1a120e] border-t border-stone-700 rounded-t-3xl p-4 space-y-4 text-right"></div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
+    // ====== تقييمات خيرات الكرك ======
+    const SUPABASE_URL = 'https://ngcjvzwgalrjjkotsjaj.supabase.co';
+    const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_JNvMpL3jBa8lm9CYf1C3Wg_IfjUleBC';
+    const ratingsDb = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+    let ratingStats = Object.create(null);
+    let ratingsReady = false;
+    let ratingsLoadError = false;
+    let myRatings = {};
+    let ratingVoterId = '';
+    try {
+      myRatings = JSON.parse(localStorage.getItem('khairat-product-ratings') || '{}') || {};
+      ratingVoterId = localStorage.getItem('khairat-rating-voter-id') || '';
+      if (!ratingVoterId) {
+        ratingVoterId = (crypto.randomUUID ? crypto.randomUUID() : (Math.random().toString(36).slice(2) + Date.now().toString(36) + Math.random().toString(36).slice(2)));
+        localStorage.setItem('khairat-rating-voter-id', ratingVoterId);
+      }
+    } catch (_) {
+      ratingVoterId = (crypto.randomUUID ? crypto.randomUUID() : (Math.random().toString(36).slice(2) + Date.now().toString(36) + Math.random().toString(36).slice(2)));
+    }
+    function saveMyRatings() {
+      try { localStorage.setItem('khairat-product-ratings', JSON.stringify(myRatings)); } catch (_) {}
+    }
+    async function loadProductRatings() {
+      const { data, error } = await ratingsDb.from('product_ratings').select('product_id,rating');
+      if (error) throw error;
+      const totals = Object.create(null);
+      for (const row of (data || [])) {
+        if (!totals[row.product_id]) totals[row.product_id] = { sum: 0, count: 0 };
+        totals[row.product_id].sum += Number(row.rating);
+        totals[row.product_id].count += 1;
+      }
+      ratingStats = Object.create(null);
+      for (const [id, value] of Object.entries(totals)) {
+        ratingStats[id] = { average: value.sum / value.count, count: value.count };
+      }
+      ratingsReady = true;
+      ratingsLoadError = false;
+      renderProducts();
+    }
+
     // ====== إعدادات الدفع ======
     const CLIQ_ALIAS = 'samarza';
     const CLIQ_BANK = 'بنك الاتحاد';
@@ -175,22 +216,38 @@
     const COPY = '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
 
     function renderProducts() {
-      const card = (p) => `
+      const card = (p) => {
+        const stat = ratingStats[p.id] || { average: 0, count: 0 };
+        const voted = Number(myRatings[p.id] || 0);
+        const stars = Array.from({ length: 5 }, (_, i) => i < Math.round(stat.average) ? '★' : '☆').join('');
+        const ratingButtons = [1, 2, 3, 4, 5].map(value =>
+          `<button type="button" data-action="rate" data-id="${p.id}" data-rating="${value}" ${voted ? 'disabled' : ''} aria-label="تقييم ${value} من 5" title="${value} من 5" class="text-base leading-none px-0.5 ${voted ? (value <= voted ? 'text-amber-400' : 'text-stone-600') : 'text-amber-400 hover:text-yellow-200'} ${voted ? 'cursor-default' : 'cursor-pointer'}">${voted ? (value <= voted ? '★' : '☆') : '★'}</button>`).join('');
+        const summary = ratingsLoadError ? 'تعذّر تحميل التقييمات' : (stat.count ? `${stat.average.toFixed(1)} / 5 · ${stat.count} تقييم` : (ratingsReady ? 'لا توجد تقييمات بعد' : 'جاري تحميل التقييمات…'));
+        const voteMessage = voted ? 'شكراً، سبق أن قيّمت هذا الصنف' : 'قيّم هذا الصنف';
+        return `
         <div class="bg-[#231913] rounded-2xl border border-stone-800 overflow-hidden shadow-md flex flex-col justify-between p-2.5">
           <div>
             <div class="relative h-28 rounded-xl overflow-hidden mb-2 bg-stone-900"><img src="${IMG[p.art]}" alt="${p.name}" class="w-full h-full object-cover" loading="lazy"></div>
             <h3 class="font-bold text-[11px] text-stone-100 mb-1 text-right">${p.name}</h3>
             <p class="text-[9px] text-stone-400 text-right leading-tight mb-2">${p.desc}</p>
+            <div class="mb-2 rounded-lg bg-[#1a120e] border border-stone-800/80 p-2">
+              <div class="flex items-center justify-between gap-1">
+                <span class="text-[9px] text-stone-300">${summary}</span>
+                <span class="text-[11px] text-amber-400 whitespace-nowrap" aria-label="متوسط التقييم">${stars}</span>
+              </div>
+              <div class="flex items-center justify-start gap-0.5 mt-1" aria-label="قيّم هذا الصنف من نجمة إلى خمس نجوم">${ratingButtons}</div>
+              <p id="rating-status-${p.id}" class="text-[9px] text-stone-500 text-right mt-1">${voteMessage}</p>
+            </div>
           </div>
           <div class="space-y-1.5 pt-2 border-t border-stone-800">
             <div class="text-left font-black text-xs text-amber-400">${fmt(p.price)} د.أ <span class="text-[9px] font-bold text-stone-400">/ ${p.priceUnit}</span></div>
             <button data-action="add" data-id="${p.id}" class="w-full bg-[#b8860b] hover:bg-[#a67c00] text-stone-950 text-[11px] font-black py-2 rounded-lg transition-colors">إضافة للسلة</button>
           </div>
         </div>`;
+      };
       $('kitchen-grid').innerHTML = PRODUCTS.filter(p => p.category === 'kitchen').map(card).join('');
       $('product-grid').innerHTML = PRODUCTS.filter(p => p.category !== 'kitchen').map(card).join('');
     }
-
     function lines() {
       return PRODUCTS.filter(p => cart[p.id] > 0).map(p => ({ ...p, qty: cart[p.id], lineTotal: cart[p.id] * p.price }));
     }
@@ -275,6 +332,35 @@
       if (a === 'open') setOpen(true);
       else if (a === 'close') setOpen(false);
       else if (a === 'browse') $('products').scrollIntoView({ behavior: 'smooth' });
+      else if (a === 'rate') {
+        const productId = el.dataset.id;
+        const rating = Number(el.dataset.rating);
+        if (myRatings[productId]) return;
+        if (!Number.isInteger(rating) || rating < 1 || rating > 5) return;
+        const status = $('rating-status-' + productId);
+        el.disabled = true;
+        if (status) status.textContent = 'جارٍ حفظ تقييمك…';
+        const { error } = await ratingsDb.from('product_ratings').insert({ product_id: productId, rating, voter_id: ratingVoterId });
+        if (error) {
+          if (error.code === '23505') {
+            myRatings[productId] = rating;
+            saveMyRatings();
+            renderProducts();
+          } else {
+            if (status) status.textContent = 'لم يُحفظ التقييم. تحقق من الاتصال ثم حاول مجدداً.';
+            el.disabled = false;
+          }
+          return;
+        }
+        myRatings[productId] = rating;
+        saveMyRatings();
+        try { await loadProductRatings(); }
+        catch (_) {
+          ratingsLoadError = true;
+          if (status) status.textContent = 'تم حفظ تقييمك، لكن تعذّر تحديث المتوسط الآن.';
+          renderProducts();
+        }
+      }
       else if (a === 'add') { // عند الإضافة للسلة تُفتح نافذة الدفع بالتحويل عبر كليك
         cart[el.dataset.id] = (cart[el.dataset.id] || 0) + 1;
         setOpen(true);
@@ -296,6 +382,11 @@
 
     renderProducts();
     renderCart();
+    loadProductRatings().catch(() => {
+      ratingsLoadError = true;
+      ratingsReady = true;
+      renderProducts();
+    });
   </script>
 
 </body>
