@@ -141,7 +141,7 @@
     function saveMyRatings() {
       try { localStorage.setItem('khairat-product-ratings', JSON.stringify(myRatings)); } catch (_) {}
     }
-    async function loadProductRatings() {
+    async async function loadProductRatings() {
       const { data, error } = await ratingsDb.from('product_ratings').select('product_id,rating');
       if (error) throw error;
       const totals = Object.create(null);
