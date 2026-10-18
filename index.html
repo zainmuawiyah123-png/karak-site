@@ -316,7 +316,7 @@
             <li>اختر التحويل إلى «اسم مستعار» وأدخل <b dir="ltr">${CLIQ_ALIAS}</b> (${CLIQ_BANK}).</li>
             <li>حوّل المبلغ <b>${fmt(total)} د.أ</b> ثم احتفظ بإشعار التحويل.</li>
           </ol>
-          ${WHATSAPP_NUMBER ? `<a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('مرحباً، حوّلت عبر كليك إلى ' + CLIQ_ALIAS + ' (' + CLIQ_BANK + ') مبلغ ' + fmt(total) + ' د.أ لطلب:\n' + ls.map(l => l.name + ' — الكمية: ' + qtyFmt(l.qty) + ' ' + l.qtyLabel + ' — السعر: ' + fmt(l.price) + ' د.أ — إجمالي الصنف: ' + fmt(l.lineTotal) + ' د.أ').join('\n') + '\nإجمالي الطلب: ' + fmt(total) + ' د.أ\n\nيرجى تأكيد توفر الطلب وتفاصيل التوصيل وموعد الوصول. شكراً لكم.'))}" target="_blank" rel="noreferrer" class="block w-full text-center bg-green-600 hover:bg-green-700 text-white font-black text-xs py-2 rounded-xl">تم التحويل عبر كليك — أرسل تفاصيل الطلب عبر واتساب</a>` : ''}
+          ${WHATSAPP_NUMBER ? `<a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('مرحبا، يعطيكم العافية 🌷\nحاب أستفسر عن طلبي من مطبخكم:\n\n' + ls.map(l => '🍽️ الطلب: ' + l.name + '\n⚖️ الكمية: ' + qtyFmt(l.qty) + ' ' + l.qtyLabel + '\n💰 السعر المعروض: ' + fmt(l.price) + ' د.أ / ' + l.priceUnit).join('\n\n') + '\n\nممكن أعرف إذا متوفر، وتفاصيل التوصيل ومتى ممكن يوصلني؟\n\nشكرًا إلكم ❤️'))}" target="_blank" rel="noreferrer" class="block w-full text-center bg-green-600 hover:bg-green-700 text-white font-black text-xs py-2 rounded-xl">استفسار عن الطلب عبر واتساب</a>` : ''}
         </div>`;
       }
       $('cart-sheet').innerHTML = html;
