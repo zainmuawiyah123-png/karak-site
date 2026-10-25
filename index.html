@@ -157,6 +157,86 @@
     @media (min-width: 768px) {
       #karak-fixed-social-bar { bottom: 18px !important; }
     }
+
+    /* تحسين نهائي للسلة والدفع: تباين واضح على الهاتف */
+    #cart-overlay { z-index: 120 !important; background: rgba(20,12,7,.72) !important; }
+    #cart-sheet {
+      background: #fffaf0 !important; color: #243f2d !important;
+      border-top: 3px solid #d4a000 !important; border-radius: 28px 28px 0 0 !important;
+      max-height: 88dvh !important; overflow-y: auto !important;
+      padding: 18px 16px calc(24px + env(safe-area-inset-bottom, 0px)) !important;
+      box-shadow: 0 -10px 35px rgba(0,0,0,.28) !important;
+      scrollbar-width: thin !important;
+    }
+    #cart-sheet h2 { color: #174c2a !important; font-size: 21px !important; }
+    #cart-sheet .text-stone-100, #cart-sheet .text-stone-200,
+    #cart-sheet .text-stone-300 { color: #293a2b !important; }
+    #cart-sheet .text-stone-400 { color: #6c6659 !important; }
+    #cart-sheet .text-amber-400, #cart-sheet .text-amber-300 {
+      color: #b88600 !important; -webkit-text-fill-color: #b88600 !important;
+    }
+    #cart-sheet > div:nth-of-type(2) > div {
+      background: #ffffff !important; border: 1px solid #e4d3af !important;
+    }
+    #cart-sheet > div:nth-of-type(2) > div .text-stone-100 { color: #243f2d !important; }
+    #cart-sheet > div:nth-of-type(3) { border-color: #e4d3af !important; }
+    #cart-sheet .order-inquiry-help { background: #f0f8f1 !important; border-color: #287747 !important; }
+    #cart-sheet .order-inquiry-title { color: #174c2a !important; }
+    #cart-sheet .order-inquiry-copy { color: #34483a !important; }
+    #cart-sheet button.order-inquiry-button {
+      background: #19743b !important; color: #fff !important;
+      -webkit-text-fill-color: #fff !important; border-color: #176534 !important;
+      min-height: 58px !important; font-size: 17px !important;
+    }
+    #cart-sheet > div:nth-of-type(5) {
+      background: #2c1d15 !important; border: 2px solid #d4a000 !important;
+      border-radius: 18px !important; padding: 14px !important;
+    }
+    #cart-sheet > div:nth-of-type(5) > div:first-child {
+      color: #ffdf32 !important; -webkit-text-fill-color: #ffdf32 !important;
+      font-size: 16px !important;
+    }
+    #cart-sheet > div:nth-of-type(5) .text-stone-100,
+    #cart-sheet > div:nth-of-type(5) .text-stone-200,
+    #cart-sheet > div:nth-of-type(5) .text-stone-300,
+    #cart-sheet > div:nth-of-type(5) .text-stone-400,
+    #cart-sheet > div:nth-of-type(5) li,
+    #cart-sheet > div:nth-of-type(5) b {
+      color: #fff3bd !important; -webkit-text-fill-color: #fff3bd !important;
+    }
+    #cart-sheet > div:nth-of-type(5) > div:not(:first-child) {
+      background: #fffaf0 !important; border-color: #e4d3af !important;
+    }
+    #cart-sheet > div:nth-of-type(5) > div:not(:first-child) .text-stone-100,
+    #cart-sheet > div:nth-of-type(5) > div:not(:first-child) .text-stone-400 {
+      color: #293a2b !important; -webkit-text-fill-color: #293a2b !important;
+    }
+    #cart-sheet > div:nth-of-type(5) ol { color: #fff3bd !important; font-size: 12px !important; }
+    #cart-sheet > div:nth-of-type(5) a {
+      display: block !important; margin-top: 14px !important; padding: 13px 10px !important;
+      background: #19743b !important; color: #fff !important;
+      -webkit-text-fill-color: #fff !important; border-radius: 14px !important;
+      font-size: 15px !important;
+    }
+    #cart-sheet [data-action="copy"] { color: #19743b !important; }
+    #cart-sheet [data-action="close"] { color: #b88600 !important; font-size: 28px !important; }
+    header button[data-action="open"] {
+      background: #ffdf32 !important; color: #21170f !important;
+      border: 2px solid #b88600 !important; font-size: 14px !important;
+      padding: 8px 12px !important; opacity: 1 !important;
+    }
+    header button[data-action="open"] #cart-count {
+      background: #2c1d15 !important; color: #ffdf32 !important;
+    }
+    #products .products-cart-count, #family-dishes .kitchen-cart-count {
+      color: #ffdf32 !important; -webkit-text-fill-color: #ffdf32 !important;
+      background: #2c1d15 !important; border: 1px solid #d4a000 !important;
+    }
+    #karak-fixed-social-bar { z-index: 80 !important; }
+    @media (max-width: 767px) {
+      #cart-sheet { max-width: 100% !important; }
+      body { padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px)) !important; }
+    }
 </style>
 
 </head>
