@@ -237,6 +237,62 @@
       #cart-sheet { max-width: 100% !important; }
       body { padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px)) !important; }
     }
+
+    /* الصفحة الأولى: إظهار العناوين والكتابة بلون أصفر فاقع واضح */
+    section h1 { color: #ffdf32 !important; -webkit-text-fill-color: #ffdf32 !important; text-shadow: 0 2px 4px #160d07, 0 0 12px rgba(0,0,0,.85) !important; }
+    section h1 span { color: #ffdf32 !important; -webkit-text-fill-color: #ffdf32 !important; }
+    section span.inline-block { color: #ffdf32 !important; -webkit-text-fill-color: #ffdf32 !important; background: #2c1d15 !important; border-color: #ffdf32 !important; }
+    section p { color: #fff3bd !important; -webkit-text-fill-color: #fff3bd !important; text-shadow: 0 1px 4px #160d07 !important; }
+    body > div > div.w-full > div > div.grid.grid-cols-3 {
+      background: #2c1d15 !important; border-color: #d4a000 !important;
+      color: #ffdf32 !important;
+    }
+    body > div > div.w-full > div > div.grid.grid-cols-3 * {
+      color: #ffdf32 !important; -webkit-text-fill-color: #ffdf32 !important;
+    }
+    /* الدفع: بطاقة فاتحة مثل التصميم السابق مع حقول واضحة وأزرار نسخ دائرية */
+    #cart-sheet > div:nth-of-type(5) {
+      background: #fffaf0 !important; border: 2px solid #e4d3af !important;
+      border-radius: 22px !important; padding: 14px !important; color: #293a2b !important;
+    }
+    #cart-sheet > div:nth-of-type(5) > div:first-child {
+      color: #245235 !important; -webkit-text-fill-color: #245235 !important;
+      font-size: 17px !important; margin-bottom: 12px !important;
+    }
+    #cart-sheet > div:nth-of-type(5) > div:not(:first-child) {
+      background: #2c1d15 !important; border: 1px solid #4b3828 !important;
+      border-radius: 14px !important; padding: 12px !important;
+    }
+    #cart-sheet > div:nth-of-type(5) > div:not(:first-child) .text-stone-100,
+    #cart-sheet > div:nth-of-type(5) > div:not(:first-child) .text-stone-200,
+    #cart-sheet > div:nth-of-type(5) > div:not(:first-child) .text-stone-300,
+    #cart-sheet > div:nth-of-type(5) > div:not(:first-child) .text-stone-400 {
+      color: #fff3bd !important; -webkit-text-fill-color: #fff3bd !important;
+    }
+    #cart-sheet > div:nth-of-type(5) > div:not(:first-child) .text-amber-400,
+    #cart-sheet > div:nth-of-type(5) > div:not(:first-child) span[dir="ltr"] {
+      color: #ffdf32 !important; -webkit-text-fill-color: #ffdf32 !important;
+    }
+    #cart-sheet > div:nth-of-type(5) ol {
+      color: #293a2b !important; font-size: 12px !important; line-height: 1.9 !important;
+    }
+    #cart-sheet > div:nth-of-type(5) ol li,
+    #cart-sheet > div:nth-of-type(5) ol b {
+      color: #293a2b !important; -webkit-text-fill-color: #293a2b !important;
+    }
+    #cart-sheet [data-action="copy"] {
+      display: inline-flex !important; align-items: center !important; justify-content: center !important;
+      width: 38px !important; height: 38px !important; min-width: 38px !important;
+      border-radius: 50% !important; border: 2px solid #d4a000 !important;
+      background: #fffaf0 !important; color: #245235 !important;
+      -webkit-text-fill-color: #245235 !important;
+    }
+    #cart-sheet > div:nth-of-type(5) a {
+      background: #19743b !important; color: #fff !important;
+      -webkit-text-fill-color: #fff !important; min-height: 50px !important;
+      border-radius: 15px !important; font-size: 15px !important;
+    }
+
 </style>
 
 </head>
