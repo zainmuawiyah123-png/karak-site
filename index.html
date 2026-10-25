@@ -67,6 +67,52 @@
       font-weight: 900 !important;
       opacity: 1 !important;
     }
+
+    /* إبراز زر الاستفسار عن الطلب — تغيير واجهة فقط */
+    #cart-sheet .order-inquiry-help {
+      display: block !important;
+      padding: 14px !important;
+      border: 2px solid #287747 !important;
+      border-radius: 16px !important;
+      background: #f0f8f1 !important;
+      color: #203b29 !important;
+      text-align: center !important;
+      box-shadow: 0 4px 14px rgba(24, 92, 48, .12) !important;
+    }
+    #cart-sheet .order-inquiry-title {
+      color: #174c2a !important;
+      font-size: 15px !important;
+      font-weight: 900 !important;
+      margin-bottom: 6px !important;
+    }
+    #cart-sheet .order-inquiry-copy {
+      color: #34483a !important;
+      font-size: 13px !important;
+      line-height: 1.7 !important;
+      margin-bottom: 12px !important;
+    }
+    #cart-sheet button.order-inquiry-button {
+      display: block !important;
+      width: 100% !important;
+      min-height: 54px !important;
+      padding: 13px 12px !important;
+      border: 2px solid #176534 !important;
+      border-radius: 12px !important;
+      background: #19743b !important;
+      color: #ffffff !important;
+      -webkit-text-fill-color: #ffffff !important;
+      font-family: 'Tajawal', sans-serif !important;
+      font-size: 16px !important;
+      font-weight: 900 !important;
+      line-height: 1.5 !important;
+      text-align: center !important;
+      opacity: 1 !important;
+      box-shadow: 0 3px 0 #105128 !important;
+    }
+    #cart-sheet button.order-inquiry-button:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 0 #105128 !important;
+    }
 </style>
 
 </head>
@@ -392,9 +438,13 @@
           <span class="text-sm font-bold text-stone-200">الإجمالي</span>
           <span class="text-lg font-black text-amber-400">${fmt(total)} د.أ</span>
         </div>
-        <button data-action="whatsapp" class="w-full bg-green-700 hover:bg-green-800 text-white font-black text-xs py-2.5 rounded-xl">
-          💬 استفسار عن الطلب عبر واتساب
-        </button>
+        <div class="order-inquiry-help" role="note">
+          <div class="order-inquiry-title">💬 هل تريد التأكد من طلبك قبل الدفع؟</div>
+          <div class="order-inquiry-copy">اضغط على الزر الأخضر لإرسال أسماء الأطباق والكميات والإجمالي إلى واتساب، والاستفسار عن التوفّر والتوصيل.</div>
+          <button data-action="whatsapp" class="order-inquiry-button" type="button">
+            💬 استفسر عن طلبك عبر واتساب
+          </button>
+        </div>
         <div class="bg-[#231913] border border-amber-700/40 rounded-2xl p-3 space-y-3">
           <div class="text-amber-300 font-black text-sm">🏦 الدفع بالتحويل عبر كليك (CliQ)</div>
           <div class="grid grid-cols-2 gap-2 text-[11px]">
