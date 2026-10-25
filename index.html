@@ -113,6 +113,48 @@
       transform: translateY(1px);
       box-shadow: 0 2px 0 #105128 !important;
     }
+
+    /* أزرار تواصل ثابتة أسفل الشاشة: ألوان واتساب وفيسبوك الرسمية */
+    #karak-fixed-social-bar {
+      position: fixed !important;
+      left: 12px !important;
+      right: 12px !important;
+      bottom: calc(10px + env(safe-area-inset-bottom, 0px)) !important;
+      z-index: 80 !important;
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 10px !important;
+      max-width: 640px !important;
+      margin: 0 auto !important;
+      padding: 8px !important;
+      border: 1px solid rgba(255,255,255,.24) !important;
+      border-radius: 18px !important;
+      background: rgba(255,250,240,.96) !important;
+      box-shadow: 0 5px 24px rgba(0,0,0,.22) !important;
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+    }
+    #karak-fixed-social-bar a {
+      min-height: 48px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 7px !important;
+      border-radius: 12px !important;
+      color: #ffffff !important;
+      -webkit-text-fill-color: #ffffff !important;
+      text-decoration: none !important;
+      font-family: 'Tajawal', sans-serif !important;
+      font-size: 14px !important;
+      font-weight: 900 !important;
+      box-shadow: 0 2px 0 rgba(0,0,0,.16) !important;
+    }
+    #karak-fixed-social-bar .karak-wa { background: #25D366 !important; }
+    #karak-fixed-social-bar .karak-fb { background: #1877F2 !important; }
+    body { padding-bottom: calc(82px + env(safe-area-inset-bottom, 0px)) !important; }
+    @media (min-width: 768px) {
+      #karak-fixed-social-bar { bottom: 18px !important; }
+    }
 </style>
 
 </head>
@@ -238,6 +280,16 @@
   <p class="text-[10px] text-stone-500">© 2026 متجر الجميد الكركي - جميع الحقوق محفوظة.</p>
 </footer>
 
+
+  <!-- أزرار تواصل ثابتة وواضحة أسفل الشاشة -->
+  <nav id="karak-fixed-social-bar" aria-label="التواصل مع خيرات الكرك">
+    <a class="karak-wa" href="https://wa.me/962795177640" target="_blank" rel="noreferrer" aria-label="تواصل معنا عبر واتساب">
+      <span aria-hidden="true">●</span><span>واتساب</span>
+    </a>
+    <a class="karak-fb" href="https://www.facebook.com/share/1ksKUVzL_Jq/?mibextid=wwXlfr" target="_blank" rel="noreferrer" aria-label="تابعنا على فيسبوك">
+      <span aria-hidden="true">f</span><span>فيسبوك</span>
+    </a>
+  </nav>
 
   <!-- نافذة السلة والدفع عبر كليك -->
   <div id="cart-overlay" class="hidden fixed inset-0 z-[100] flex justify-center items-end bg-black/60" data-action="close-overlay">
