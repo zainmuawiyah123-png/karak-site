@@ -307,6 +307,9 @@
 /* نجوم التقييم بلون أصفر فاقع وواضح */
 #product-grid [data-action="rate"], #kitchen-grid [data-action="rate"] { color:#ffdf00!important; -webkit-text-fill-color:#ffdf00!important; text-shadow:0 0 2px #9b7300!important; opacity:1!important; }
 #product-grid [aria-label="متوسط التقييم"], #kitchen-grid [aria-label="متوسط التقييم"] { color:#ffdf00!important; -webkit-text-fill-color:#ffdf00!important; }
+
+/* وصف المنتجات: خط أوضح وتباين أعلى على الهاتف */
+.product-desc { color:#59451a!important; -webkit-text-fill-color:#59451a!important; font-family:'Tajawal',sans-serif!important; font-size:12px!important; font-weight:800!important; line-height:1.7!important; text-shadow:none!important; }
 </style>
 
 </head>
@@ -566,7 +569,7 @@
           <div>
             <div class="relative h-28 rounded-xl overflow-hidden mb-2 bg-stone-900"><img src="${IMG[p.art]}" alt="${p.name}" class="w-full h-full object-cover" loading="lazy"></div>
             <h3 class="font-bold text-[11px] text-stone-100 mb-1 text-right">${p.name}</h3>
-            <p class="text-[9px] text-stone-400 text-right leading-tight mb-2">${p.desc}</p>
+            <p class="product-desc text-right leading-relaxed mb-2">${p.desc}</p>
             <div class="mb-2 rounded-lg bg-[#1a120e] border border-stone-800/80 p-2">
               <div class="flex items-center justify-between gap-1">
                 <span class="text-[9px] text-stone-300">${summary}</span>
