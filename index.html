@@ -291,7 +291,7 @@
     <a class="karak-fb" href="https://www.facebook.com/share/1ksKUVzL_Jq/?mibextid=wwXlfr" target="_blank" rel="noreferrer" aria-label="تابعنا على فيسبوك">
       <span aria-hidden="true">f</span><span>فيسبوك</span>
     </a>
-    <a class="karak-ig" href="https://www.instagram.com/aljameed.jo/" rel="noopener noreferrer" aria-label="تابعنا على إنستغرام"><span aria-hidden="true">◎</span><span>إنستغرام</span></a>
+    <a class="karak-ig" href="https://www.instagram.com/aljameed.jo/" onclick="event.preventDefault(); var profileUrl=this.href; var fallback=setTimeout(function(){window.location.href=profileUrl;},900); window.location.href='instagram://user?username=aljameed.jo'; window.addEventListener('pagehide',function(){clearTimeout(fallback);},{once:true});" rel="noopener noreferrer" aria-label="تابعنا على إنستغرام"><span aria-hidden="true">◎</span><span>إنستغرام</span></a>
   </nav>
 
   <!-- نافذة السلة والدفع عبر كليك -->
