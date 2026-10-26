@@ -295,7 +295,7 @@
 
 
 /* High contrast yellow product rating stars */
-#product-grid [data-action="rate"], #kitchen-grid [data-action="rate"], #product-grid [aria-label="متوسط التقييم"], #kitchen-grid [aria-label="متوسط التقييم"] { color:#ffdf00!important; -webkit-text-fill-color:#ffdf00!important; text-shadow:0 0 2px #7a5100!important; font-size:10px!important; opacity:1!important; }
+#product-grid [data-action="rate"], #kitchen-grid [data-action="rate"], #product-grid [aria-label="متوسط التقييم"], #kitchen-grid [aria-label="متوسط التقييم"] { color:#ffdf00!important; -webkit-text-fill-color:#ffdf00!important; text-shadow:0 0 2px #7a5100!important; font-size:14px!important; opacity:1!important; }
 #product-grid [data-action="rate"]:disabled,#kitchen-grid [data-action="rate"]:disabled {color:#ffdf00!important;-webkit-text-fill-color:#ffdf00!important;opacity:1!important}
 #product-grid [data-action="rate"],#kitchen-grid [data-action="rate"] {min-width:25px!important;min-height:28px!important}
 #cart-sheet .cash-on-delivery-card {background:#fffaf0!important;border:2px solid #287747!important;border-radius:20px!important;padding:14px!important;color:#243f2d!important}
@@ -582,7 +582,7 @@
         const voted = Number(myRatings[p.id] || 0);
         const stars = Array.from({ length: 5 }, (_, i) => i < Math.round(stat.average) ? '★' : '☆').join('');
         const ratingButtons = [1, 2, 3, 4, 5].map(value =>
-          `<button type="button" data-action="rate" data-id="${p.id}" data-rating="${value}" ${voted ? 'disabled' : ''} aria-label="تقييم ${value} من 5" title="${value} من 5" class="text-[10px] leading-none px-0 ${voted ? (value <= voted ? 'text-amber-400' : 'text-stone-600') : 'text-amber-400 hover:text-yellow-200'} ${voted ? 'cursor-default' : 'cursor-pointer'}">${voted ? (value <= voted ? '★' : '☆') : '★'}</button>`).join('');
+          `<button type="button" data-action="rate" data-id="${p.id}" data-rating="${value}" ${voted ? 'disabled' : ''} aria-label="تقييم ${value} من 5" title="${value} من 5" class="text-xs leading-none px-0 ${voted ? (value <= voted ? 'text-amber-400' : 'text-stone-600') : 'text-amber-400 hover:text-yellow-200'} ${voted ? 'cursor-default' : 'cursor-pointer'}">${voted ? (value <= voted ? '★' : '☆') : '★'}</button>`).join('');
         const summary = ratingsLoadError ? 'تعذّر تحميل التقييمات' : (stat.count ? `${stat.average.toFixed(1)} / 5 · ${stat.count} تقييم` : (ratingsReady ? 'لا توجد تقييمات بعد' : 'جاري تحميل التقييمات…'));
         const voteMessage = voted ? 'شكراً، سبق أن قيّمت هذا الصنف' : 'قيّم هذا الصنف';
         return `
