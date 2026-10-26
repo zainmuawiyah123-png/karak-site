@@ -602,7 +602,7 @@
           </div>
           <div class="space-y-1.5 pt-2 border-t border-stone-800">
             <div class="text-left font-black text-xs text-amber-400">${fmt(p.price)} د.أ <span class="text-[9px] font-bold text-stone-400">/ ${p.priceUnit}</span></div>
-            ${Object.prototype.hasOwnProperty.call(OFFER_EXTRA_PRICE, p.id) ? `<div class="text-[10px] text-purple-900 bg-[#e9d5ff] border border-[#c084fc] rounded-lg p-2 text-right">🔥 عرض خاص: الكمية الأولى ${fmt(p.price)} د.أ، وكل كمية إضافية ${fmt(OFFER_EXTRA_PRICE[p.id])} د.أ</div>` : ''}
+            ${Object.prototype.hasOwnProperty.call(OFFER_EXTRA_PRICE, p.id) ? `<div class="text-[10px] text-black bg-[#ccff00] border border-[#ccff00] rounded-lg p-2 text-right">🔥 عرض خاص: الكمية الأولى ${fmt(p.price)} د.أ، وكل كمية إضافية ${fmt(OFFER_EXTRA_PRICE[p.id])} د.أ</div>` : ''}
             <div class="flex items-center justify-between gap-2 rounded-lg bg-[#1a120e] border border-stone-800 p-1.5">
               <span class="text-[10px] text-stone-300">الكمية</span>
               <div class="flex items-center gap-2">
