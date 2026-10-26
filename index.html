@@ -549,7 +549,28 @@
     const fmt = (n) => n.toFixed(2);
     const qtyFmt = (q) => (Number.isInteger(q) ? String(q) : q.toFixed(1));
     const cart = {};
+    const selectedQty = {};
     let copied = '';
+
+    // أسعار العروض: السعر الأول يبقى كما هو، وكل كمية إضافية بسعر العرض.
+    const OFFER_EXTRA_PRICE = {
+      'kitchen-mansaf': 20,
+      'khalili-qidra': 20,
+      'meat-maqluba': 18,
+      'chicken-maqluba': 10,
+      'chicken-potato-tray': 10
+    };
+    const priceForQty = (p, qty) => {
+      const q = Math.max(0, Number(qty) || 0);
+      if (Object.prototype.hasOwnProperty.call(OFFER_EXTRA_PRICE, p.id)) {
+        return q > 0 ? p.price + Math.max(0, q - 1) * OFFER_EXTRA_PRICE[p.id] : 0;
+      }
+      return q * p.price;
+    };
+    const offerSaving = (p, qty) =>
+      Object.prototype.hasOwnProperty.call(OFFER_EXTRA_PRICE, p.id)
+        ? Math.max(0, qty - 1) * (p.price - OFFER_EXTRA_PRICE[p.id])
+        : 0;
 
     const $ = (id) => document.getElementById(id);
     const CHECK = '<svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>';
@@ -581,6 +602,17 @@
           </div>
           <div class="space-y-1.5 pt-2 border-t border-stone-800">
             <div class="text-left font-black text-xs text-amber-400">${fmt(p.price)} د.أ <span class="text-[9px] font-bold text-stone-400">/ ${p.priceUnit}</span></div>
+            ${Object.prototype.hasOwnProperty.call(OFFER_EXTRA_PRICE, p.id) ? `<div class="text-[10px] text-amber-200 bg-amber-900/30 border border-amber-700/40 rounded-lg p-2 text-right">🔥 عرض خاص: الكمية الأولى ${fmt(p.price)} د.أ، وكل كمية إضافية ${fmt(OFFER_EXTRA_PRICE[p.id])} د.أ</div>` : ''}
+            <div class="flex items-center justify-between gap-2 rounded-lg bg-[#1a120e] border border-stone-800 p-1.5">
+              <span class="text-[10px] text-stone-300">الكمية</span>
+              <div class="flex items-center gap-2">
+                <button type="button" data-action="card-qty" data-id="${p.id}" data-delta="-1" aria-label="تقليل الكمية" class="w-7 h-7 rounded-full bg-stone-700 text-white font-black">−</button>
+                <span id="selected-qty-${p.id}" class="min-w-[20px] text-center text-xs font-black text-white">${selectedQty[p.id] || 1}</span>
+                <button type="button" data-action="card-qty" data-id="${p.id}" data-delta="1" aria-label="زيادة الكمية" class="w-7 h-7 rounded-full bg-[#b8860b] text-stone-950 font-black">+</button>
+              </div>
+            </div>
+            <div id="selected-total-${p.id}" class="text-right text-xs font-black text-amber-300">الإجمالي: ${fmt(priceForQty(p, selectedQty[p.id] || 1))} د.أ</div>
+            ${offerSaving(p, selectedQty[p.id] || 1) > 0 ? `<div id="selected-saving-${p.id}" class="text-right text-[10px] text-green-400">وفّرت ${fmt(offerSaving(p, selectedQty[p.id] || 1))} د.أ</div>` : `<div id="selected-saving-${p.id}" class="text-right text-[10px] text-green-400"></div>`}
             <button data-action="add" data-id="${p.id}" class="w-full bg-[#b8860b] hover:bg-[#a67c00] text-stone-950 text-[11px] font-black py-2 rounded-lg transition-colors">إضافة للسلة</button>
           </div>
         </div>`;
@@ -590,7 +622,7 @@
     }
 
     function lines() {
-      return PRODUCTS.filter(p => cart[p.id] > 0).map(p => ({ ...p, qty: cart[p.id], lineTotal: cart[p.id] * p.price }));
+      return PRODUCTS.filter(p => cart[p.id] > 0).map(p => ({ ...p, qty: cart[p.id], lineTotal: priceForQty(p, cart[p.id]) }));
     }
 
     // ====== إرسال الاستفسار عن الطلب عبر واتساب ======
@@ -745,8 +777,22 @@
           renderProducts();
         }
       }
+      else if (a === 'card-qty') {
+        const id = el.dataset.id;
+        const p = PRODUCTS.find(item => item.id === id);
+        if (!p) return;
+        selectedQty[id] = Math.max(1, (selectedQty[id] || 1) + Number(el.dataset.delta));
+        const q = selectedQty[id];
+        const qtyEl = $('selected-qty-' + id);
+        const totalEl = $('selected-total-' + id);
+        const savingEl = $('selected-saving-' + id);
+        if (qtyEl) qtyEl.textContent = qtyFmt(q);
+        if (totalEl) totalEl.textContent = 'الإجمالي: ' + fmt(priceForQty(p, q)) + ' د.أ';
+        if (savingEl) savingEl.textContent = offerSaving(p, q) > 0 ? 'وفّرت ' + fmt(offerSaving(p, q)) + ' د.أ' : '';
+      }
       else if (a === 'add') {
-        cart[el.dataset.id] = (cart[el.dataset.id] || 0) + 1;
+        const id = el.dataset.id;
+        cart[id] = (cart[id] || 0) + (selectedQty[id] || 1);
         setOpen(true);
       }
       else if (a === 'qty') {
